@@ -1,30 +1,47 @@
-
+import streamlit as st
 import random 
+from streamlit import session_state as session
 
-score = 0 
-tries = 0 
-answer = 0
-human_input = 0 
-option = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
 def game():
-    global option
-    global human_input
-    one = random.choice(option)
-    print(f"first card   {one}")
-    human_input = input("enter your first gess L or H? ")
-    two = random.choice(option)
-    if human_input.lower() == "l":
-        if one > two:
-            print(f"correct it was {two}")
-            game()
-        else:
-            print(f"Wrong it was {two}")
-    elif human_input.lower() == "h":
-        if one < two:
-            print(f"correct it was {two}")
-            game()
-        else:
-            print(f"Wrong it was {two}")
+    st.title("Higher or Lower Game")
+    st.write("Welcome! Guess whether the next card will be higher or lower than the current card.")
+    
+    if 'score' not in session:
+        session.score = 0
+        session.option = list(range(1, 14))
+        session.first_card = None
+        session.end = False
+    if session.score < 5:
+        if session.first_card is None:
+            session.first_card = random.choice(session.option)
 
+        second_card = random.choice(session.option)
 
-game()
+        with st.form("my_form"):
+            st.write(f"First card: {session.first_card}")
+
+            human_input = st.selectbox("Higher Or Lower", options=["Lower", "Higher"])
+
+            submitted = st.form_submit_button("Submit")
+
+            if submitted:
+                if (human_input == "Lower" and session.first_card > second_card) or \
+                   (human_input == "Higher" and session.first_card < second_card):
+                    st.write(f"Correct! It was {second_card}")
+                    session.score += 1
+                    st.write(f"Score: {session.score}")
+                else:
+                    st.write(f"Wrong! It was {second_card}")
+                    st.write(f"Score: {session.score}")
+                    end = True
+
+                session.first_card = second_card
+        if end == True:
+            st.write("You Lost")
+            session.clear()  # Reset session state after winning
+        if session.score >= 5:
+            st.write("Congratulations! You won!")
+            session.clear()  # Reset session state after winning
+
+if __name__ == "__main__":
+    game()
