@@ -1,6 +1,15 @@
 import streamlit as st
 import random 
 
+
+st.set_page_config(
+    page_title="Play Your Cards Right",
+    page_icon="🃏",
+    layout="centered",
+    initial_sidebar_state="expanded",
+    menu_items={'About': "I Made This Game When I Was 13 Years Old"}
+)
+
 def game():
     st.title("Higher or Lower Game")
 
