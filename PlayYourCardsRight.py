@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 def game():
-    st.title("Higher or Lower Game")
+    st.title("Play Your Cards Right")
 
     st.write("Welcome! Guess whether the next card will be higher or lower than the current card.")
     cards = st.session_state.get('cards', ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"])
