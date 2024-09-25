@@ -54,7 +54,8 @@ def game():
             st.write("You Lost")
             st.session_state.clear()  # Reset session state after winning
         if score >= 5:
-            st.write("Congratulations! You won!")
+            st.success("Congratulations! You won!", icon="✅")
+            st.balloons()
             st.session_state.clear()  # Reset session state after winning
 
 if __name__ == "__main__":
